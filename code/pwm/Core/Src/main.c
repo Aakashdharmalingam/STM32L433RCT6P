@@ -85,10 +85,10 @@ int main(void)
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-    RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN; //0b0110
+    RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN; //enable for clock signal
   	RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
 
-  	//This is for alternate functions PA0
+  	//This is for alternate functions PA0 as PWM
   	GPIOA->MODER |= GPIO_MODER_MODE0_1;  //
   	GPIOA->MODER &= ~(GPIO_MODER_MODE0_0);  /// this is for clear
   	GPIOA->AFR[0] |= GPIO_AFRL_AFSEL0_0;//TIM 2 CHANNEL 1 0001->AF1
@@ -96,7 +96,7 @@ int main(void)
 
   	TIM2->PSC = 8000;
   	TIM2->ARR = 1000;//CCR=500 50%
-  	TIM2->CCR1 = 500;
+  	TIM2->CCR1 = 500; // this register will make pwm pulse 500 eg 50%
   	TIM2->CCMR1 |= TIM_CCMR1_OC1M_1|TIM_CCMR1_OC1M_2|TIM_CCMR1_OC1PE;
   	TIM2->CCER |= TIM_CCER_CC1E;
   	TIM2->CR1 |= TIM_CR1_CEN; //TIMER ON

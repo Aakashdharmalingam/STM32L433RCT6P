@@ -108,26 +108,26 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
  80001d8:	f000 f85e 	bl	8000298 <MX_GPIO_Init>
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, 1);
  80001dc:	2201      	movs	r2, #1
  80001de:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
  80001e2:	4809      	ldr	r0, [pc, #36]	@ (8000208 <main+0x3c>)
  80001e4:	f000 fc18 	bl	8000a18 <HAL_GPIO_WritePin>
-	  HAL_Delay(1000);
- 80001e8:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
+	  HAL_Delay(2000); // 2 seconds
+ 80001e8:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  80001ec:	f000 f990 	bl	8000510 <HAL_Delay>
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, 0);
  80001f0:	2200      	movs	r2, #0
  80001f2:	f44f 5100 	mov.w	r1, #8192	@ 0x2000
  80001f6:	4804      	ldr	r0, [pc, #16]	@ (8000208 <main+0x3c>)
  80001f8:	f000 fc0e 	bl	8000a18 <HAL_GPIO_WritePin>
-	  HAL_Delay(1000);
- 80001fc:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
+	  HAL_Delay(2000);
+ 80001fc:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  8000200:	f000 f986 	bl	8000510 <HAL_Delay>
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, 1);
  8000204:	bf00      	nop

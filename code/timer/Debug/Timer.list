@@ -144,13 +144,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-  RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN;
+  RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN; // Enable GPIOB clock signal set
  8000214:	4b1d      	ldr	r3, [pc, #116]	@ (800028c <main+0x84>)
  8000216:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
  8000218:	4a1c      	ldr	r2, [pc, #112]	@ (800028c <main+0x84>)
  800021a:	f043 0302 	orr.w	r3, r3, #2
  800021e:	64d3      	str	r3, [r2, #76]	@ 0x4c
-  GPIOB->MODER |= GPIO_MODER_MODE13_0;
+  GPIOB->MODER |= GPIO_MODER_MODE13_0; // output PB13
  8000220:	4b1b      	ldr	r3, [pc, #108]	@ (8000290 <main+0x88>)
  8000222:	681b      	ldr	r3, [r3, #0]
  8000224:	4a1a      	ldr	r2, [pc, #104]	@ (8000290 <main+0x88>)
@@ -163,30 +163,31 @@ int main(void)
  8000232:	f023 6300 	bic.w	r3, r3, #134217728	@ 0x8000000
  8000236:	6013      	str	r3, [r2, #0]
 
+  // enable clock signal to timer2
   RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
  8000238:	4b14      	ldr	r3, [pc, #80]	@ (800028c <main+0x84>)
  800023a:	6d9b      	ldr	r3, [r3, #88]	@ 0x58
  800023c:	4a13      	ldr	r2, [pc, #76]	@ (800028c <main+0x84>)
  800023e:	f043 0301 	orr.w	r3, r3, #1
  8000242:	6593      	str	r3, [r2, #88]	@ 0x58
-  TIM2->PSC = 2000;
+  TIM2->PSC = 4000; // Prescale register for 6 sec
  8000244:	f04f 4380 	mov.w	r3, #1073741824	@ 0x40000000
- 8000248:	f44f 62fa 	mov.w	r2, #2000	@ 0x7d0
+ 8000248:	f44f 627a 	mov.w	r2, #4000	@ 0xfa0
  800024c:	629a      	str	r2, [r3, #40]	@ 0x28
-  TIM2->ARR = 1000;
+  TIM2->ARR = 1000; // Auto reload register
  800024e:	f04f 4380 	mov.w	r3, #1073741824	@ 0x40000000
  8000252:	f44f 727a 	mov.w	r2, #1000	@ 0x3e8
  8000256:	62da      	str	r2, [r3, #44]	@ 0x2c
-  TIM2->DIER |= TIM_DIER_UIE;
+  TIM2->DIER |= TIM_DIER_UIE; // interrupt enable
  8000258:	f04f 4380 	mov.w	r3, #1073741824	@ 0x40000000
  800025c:	68db      	ldr	r3, [r3, #12]
  800025e:	f04f 4280 	mov.w	r2, #1073741824	@ 0x40000000
  8000262:	f043 0301 	orr.w	r3, r3, #1
  8000266:	60d3      	str	r3, [r2, #12]
-  NVIC_EnableIRQ(TIM2_IRQn);
+  NVIC_EnableIRQ(TIM2_IRQn); //calling function IRQ handler
  8000268:	201c      	movs	r0, #28
  800026a:	f7ff ffaf 	bl	80001cc <__NVIC_EnableIRQ>
-  TIM2->CR1 |= TIM_CR1_CEN;
+  TIM2->CR1 |= TIM_CR1_CEN; // start the count
  800026e:	f04f 4380 	mov.w	r3, #1073741824	@ 0x40000000
  8000272:	681b      	ldr	r3, [r3, #0]
  8000274:	f04f 4280 	mov.w	r2, #1073741824	@ 0x40000000
@@ -197,7 +198,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  count =TIM2->CNT;
+	  count =TIM2->CNT; // value of count
  800027e:	f04f 4380 	mov.w	r3, #1073741824	@ 0x40000000
  8000282:	6a5b      	ldr	r3, [r3, #36]	@ 0x24
  8000284:	4a03      	ldr	r2, [pc, #12]	@ (8000294 <main+0x8c>)
@@ -320,7 +321,7 @@ void TIM2_IRQHandler()
 {
  8000324:	b480      	push	{r7}
  8000326:	af00      	add	r7, sp, #0
-	TIM2->SR &= ~TIM_SR_UIF;
+	TIM2->SR &= ~TIM_SR_UIF; // reset the interrupt flag , set can be done by hardware while jump to function
  8000328:	f04f 4380 	mov.w	r3, #1073741824	@ 0x40000000
  800032c:	691b      	ldr	r3, [r3, #16]
  800032e:	f04f 4280 	mov.w	r2, #1073741824	@ 0x40000000

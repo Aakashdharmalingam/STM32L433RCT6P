@@ -87,6 +87,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   RCC->APB2ENR |=RCC_APB2ENR_SPI1EN;
   RCC->AHB2ENR |=RCC_AHB2ENR_GPIOAEN;
+  RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN;
 
   //PA5 sck pin
   GPIOA->MODER &= ~GPIO_MODER_MODE5_0;
@@ -107,6 +108,9 @@ int main(void)
   GPIOA->MODER &= ~GPIO_MODER_MODE4_0;
   GPIOA->OSPEEDR |= (GPIO_OSPEEDER_OSPEEDR4_1 | GPIO_OSPEEDER_OSPEEDR4_0);
   GPIOA->AFR[0] |= GPIO_AFRL_AFSEL4_0 | GPIO_AFRL_AFSEL4_2;
+//  GPIOB->MODER &= ~GPIO_MODER_MODE5_1;
+//  GPIOB->MODER |= GPIO_MODER_MODE5_0;
+//  GPIOB->ODR |= GPIO_ODR_OD5;
 
 
   SPI1->CR1 |= SPI_CR1_BR_0 | SPI_CR1_BR_1 | SPI_CR1_BR_2 | SPI_CR1_MSTR  ;
@@ -120,6 +124,7 @@ int main(void)
   while (1)
   {
 	  send_data(0x8000);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -175,8 +180,11 @@ void SystemClock_Config(void)
 void send_data(int data)
 {
 	SPI1->DR = data;
+//	  GPIOB->ODR &= ~GPIO_ODR_OD5;
 	while((SPI1->SR & SPI_SR_TXE) != SPI_SR_TXE);
-	HAL_Delay(1000);
+//	HAL_Delay(10);
+//	  GPIOB->ODR |= GPIO_ODR_OD5;
+
 
 //	data=SPI1->DR;
 //	incase return data

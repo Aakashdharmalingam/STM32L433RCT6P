@@ -106,7 +106,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-    RCC->AHB2ENR |= (RCC_AHB2ENR_GPIOBEN | RCC_AHB2ENR_GPIOCEN); //0b0110
+    RCC->AHB2ENR |= (RCC_AHB2ENR_GPIOBEN | RCC_AHB2ENR_GPIOCEN); //0b0110 Enable Clock signal For both GPIOB & GPIOC
  80001d8:	4b18      	ldr	r3, [pc, #96]	@ (800023c <main+0x70>)
  80001da:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
  80001dc:	4a17      	ldr	r2, [pc, #92]	@ (800023c <main+0x70>)
@@ -128,25 +128,25 @@ int main(void)
  80001fa:	6013      	str	r3, [r2, #0]
 
   	//BUTTON CONFIG PC13
-  	GPIOC->MODER &= ~(GPIO_MODER_MODE13_0 | GPIO_MODER_MODE13_1); //THIS IS FOR CLEAR THE BITS
+  	GPIOC->MODER &= ~(GPIO_MODER_MODE13_0 | GPIO_MODER_MODE13_1); //THIS IS FOR CLEAR THE BITS Define as INPUT PIN
  80001fc:	4b11      	ldr	r3, [pc, #68]	@ (8000244 <main+0x78>)
  80001fe:	681b      	ldr	r3, [r3, #0]
  8000200:	4a10      	ldr	r2, [pc, #64]	@ (8000244 <main+0x78>)
  8000202:	f023 6340 	bic.w	r3, r3, #201326592	@ 0xc000000
  8000206:	6013      	str	r3, [r2, #0]
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-	  if((GPIOC->IDR & GPIO_IDR_ID13) == GPIO_IDR_ID13 )
+	  if((GPIOC->IDR & GPIO_IDR_ID13) == GPIO_IDR_ID13 ) //WHEN BUTTON PRESSED Set 1
  8000208:	4b0e      	ldr	r3, [pc, #56]	@ (8000244 <main+0x78>)
  800020a:	691b      	ldr	r3, [r3, #16]
  800020c:	f403 5300 	and.w	r3, r3, #8192	@ 0x2000
  8000210:	f5b3 5f00 	cmp.w	r3, #8192	@ 0x2000
  8000214:	d105      	bne.n	8000222 <main+0x56>
 	  {
-		GPIOB->ODR |= GPIO_IDR_ID13;
+		GPIOB->ODR |= GPIO_IDR_ID13; // LED ON Set
  8000216:	4b0a      	ldr	r3, [pc, #40]	@ (8000240 <main+0x74>)
  8000218:	695b      	ldr	r3, [r3, #20]
  800021a:	4a09      	ldr	r2, [pc, #36]	@ (8000240 <main+0x74>)
@@ -160,13 +160,13 @@ int main(void)
  800022a:	2b00      	cmp	r3, #0
  800022c:	d1ec      	bne.n	8000208 <main+0x3c>
 	  {
-		  GPIOB->ODR &= ~(GPIO_IDR_ID13);
+		  GPIOB->ODR &= ~(GPIO_IDR_ID13); // LED OFF reset
  800022e:	4b04      	ldr	r3, [pc, #16]	@ (8000240 <main+0x74>)
  8000230:	695b      	ldr	r3, [r3, #20]
  8000232:	4a03      	ldr	r2, [pc, #12]	@ (8000240 <main+0x74>)
  8000234:	f423 5300 	bic.w	r3, r3, #8192	@ 0x2000
  8000238:	6153      	str	r3, [r2, #20]
-	  if((GPIOC->IDR & GPIO_IDR_ID13) == GPIO_IDR_ID13 )
+	  if((GPIOC->IDR & GPIO_IDR_ID13) == GPIO_IDR_ID13 ) //WHEN BUTTON PRESSED Set 1
  800023a:	e7e5      	b.n	8000208 <main+0x3c>
  800023c:	40021000 	.word	0x40021000
  8000240:	48000400 	.word	0x48000400

@@ -94,11 +94,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, 1);
-	  HAL_Delay(1000);
+	  HAL_Delay(2000); // 2 seconds
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, 0);
-	  HAL_Delay(1000);
+	  HAL_Delay(2000);
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }

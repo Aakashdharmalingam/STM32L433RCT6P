@@ -85,34 +85,35 @@ int main(void)
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-    RCC->AHB2ENR |= (RCC_AHB2ENR_GPIOBEN | RCC_AHB2ENR_GPIOCEN); //0b0110
+    RCC->AHB2ENR |= (RCC_AHB2ENR_GPIOBEN | RCC_AHB2ENR_GPIOCEN); //0b0110 Enable Clock signal For both GPIOB & GPIOC
   	//JUST ENABLE THE PORTB CLOCK
   	//LED CONFIG PB13
   	GPIOB->MODER |= GPIO_MODER_MODE13_0;  //0b0000 0010<<26  This is for set
   	GPIOB->MODER &= ~(GPIO_MODER_MODE13_1);  /// this is for clear
 
   	//BUTTON CONFIG PC13
-  	GPIOC->MODER &= ~(GPIO_MODER_MODE13_0 | GPIO_MODER_MODE13_1); //THIS IS FOR CLEAR THE BITS
+  	GPIOC->MODER &= ~(GPIO_MODER_MODE13_0 | GPIO_MODER_MODE13_1); //THIS IS FOR CLEAR THE BITS Define as INPUT PIN
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-	  if((GPIOC->IDR & GPIO_IDR_ID13) == GPIO_IDR_ID13 )
+	  if((GPIOC->IDR & GPIO_IDR_ID13) == GPIO_IDR_ID13 ) //WHEN BUTTON PRESSED Set 1
 	  {
-		GPIOB->ODR |= GPIO_IDR_ID13;
+		GPIOB->ODR |= GPIO_IDR_ID13; // LED ON Set
 	  }
 	  if((GPIOC->IDR & GPIO_IDR_ID13)== 0)
 	  {
-		  GPIOB->ODR &= ~(GPIO_IDR_ID13);
+		  GPIOB->ODR &= ~(GPIO_IDR_ID13); // LED OFF reset
 	  }
-	    /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
   }
 
   /* USER CODE END 3 */
- }
+}
 
 /**
   * @brief System Clock Configuration

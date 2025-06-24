@@ -85,24 +85,26 @@ int main(void)
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-  RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN;
-  GPIOB->MODER |= GPIO_MODER_MODE13_0;
+  RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN; // Enable GPIOB clock signal set
+  GPIOB->MODER |= GPIO_MODER_MODE13_0; // output PB13
   GPIOB->MODER &= ~(GPIO_MODER_MODE13_1);
 
+  // enable clock signal to timer2
   RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
-  TIM2->PSC = 2000;
-  TIM2->ARR = 1000;
-  TIM2->DIER |= TIM_DIER_UIE;
-  NVIC_EnableIRQ(TIM2_IRQn); //calling function mari dha
-  TIM2->CR1 |= TIM_CR1_CEN;
+  TIM2->PSC = 4000; // Prescale register for 6 sec
+  TIM2->ARR = 1000; // Auto reload register
+  TIM2->DIER |= TIM_DIER_UIE; // interrupt enable
+  NVIC_EnableIRQ(TIM2_IRQn); //calling function IRQ handler
+  TIM2->CR1 |= TIM_CR1_CEN; // start the count
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  count =TIM2->CNT;
-    /* USER CODE END WHILE */
+	  count =TIM2->CNT; // value of count
+    // match the arr to cnt
+	  /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -156,7 +158,7 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void TIM2_IRQHandler()
 {
-	TIM2->SR &= ~TIM_SR_UIF;
+	TIM2->SR &= ~TIM_SR_UIF; // reset the interrupt flag , set can be done by hardware while jump to function
 	//LED toggle
 	if((GPIOB->IDR & GPIO_IDR_ID13) == GPIO_IDR_ID13)//ON
 	{

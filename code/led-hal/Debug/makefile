@@ -52,6 +52,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 led_hal.list \
 
+OBJCOPY_HEX += \
+led_hal.hex \
+
 
 # All Target
 all: main-build
@@ -75,12 +78,17 @@ led_hal.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+led_hal.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "led_hal.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) default.size.stdout led_hal.elf led_hal.list led_hal.map
+	-$(RM) default.size.stdout led_hal.elf led_hal.hex led_hal.list led_hal.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
