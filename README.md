@@ -16,13 +16,13 @@ This folder contains a curated collection of **STM32L433RCT6P peripheral example
 | 4️⃣ | `dot_matrix_hal`   | Dot matrix display using STM32 HAL drivers |
 | 5️⃣ | `dot_matrix_sepc`  | Access the specific address of display to print the letters (custom display format or characters) |
 | 6️⃣ | `external interrupts` | Configure EXTI for push-button or signal input (bare-metal) |
-| 7️⃣ | `i2c`              | I2C communication master setup (register-level or HAL-based) |
+| 7️⃣ | `i2c`              | I2C communication master setup to transmitte (register-level or HAL-based) |
 | 8️⃣ | `i2c_Rec`          | I2C receiver implementation (master-slave setup) |
 | 9️⃣ | `led-hal`          | LED blinking using HAL functions |
 | 🔟 | `led_blink`         | LED blinking using register-level GPIO toggling |
 | 1️⃣1️⃣ | `led_button`     | LED toggle using button input (GPIO + polling) |
 | 1️⃣2️⃣ | `pwm`            | PWM signal generation using TIM2, controlling frequency and duty cycle |
-| 1️⃣3️⃣ | `spi`            | SPI communication setup (e.g., dot matrix displays) |
+| 1️⃣3️⃣ | `spi`            | SPI communication setup FULL - DUPLEX(e.g., dot matrix displays) |
 | 1️⃣4️⃣ | `timer`          | Use of TIM2 for time delay and event generation |
 | 1️⃣5️⃣ | `uart`           | UART transmit (polling or interrupt-based) |
 | 1️⃣6️⃣ | `uart_rec`       | UART receive (polling, interrupt, or DMA based) |
@@ -86,7 +86,7 @@ README.md
 
 **Aakash Dharmalingam**  
  ECE Student | Embedded Systems | IoT Developer  
-🔗 [LinkedIn](https://www.linkedin.com/in/aakashdharmalingam)
+🔗 [LinkedIn](https://www.linkedin.com/in/aakash-dharmalingam-6a1455248/)
 
 ---
 
